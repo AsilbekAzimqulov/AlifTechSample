@@ -20,7 +20,7 @@ class MainInteractorImpl : MainInteractor {
         return flow {
             repository.getGuidesLocal().collect {
                 if (it.size > 2)
-                    emit(it.subList(0, 2))
+                    emit(it.subList(0, 3))
                 else emit(it)
             }
         }
