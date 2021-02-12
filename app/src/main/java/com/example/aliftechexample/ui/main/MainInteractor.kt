@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 
 interface MainInteractor {
     suspend fun getGuide(): Flow<List<Guide>>
-    suspend fun loadMoreGuide():Flow<List<Guide>>
+    suspend fun loadMoreGuide(): Flow<List<Guide>>
 }
 
 class MainInteractorImpl : MainInteractor {
@@ -18,9 +18,11 @@ class MainInteractorImpl : MainInteractor {
 
     override suspend fun getGuide(): Flow<List<Guide>> {
         return flow {
-        repository.getGuidesLocal().collect {
-            emit(it.subList(0,2))
-        }
+            repository.getGuidesLocal().collect {
+                if (it.size > 2)
+                    emit(it.subList(0, 2))
+                else emit(it)
+            }
         }
     }
 
